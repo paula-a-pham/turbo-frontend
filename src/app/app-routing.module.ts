@@ -2,7 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 
-const routes: Routes = [{ path: '**', component: NotFoundComponent }];
+const routes: Routes = [
+  {
+    path: '',
+    loadChildren: () =>
+      import('./modules/chatbot/chatbot.module').then((m) => m.ChatbotModule),
+  },
+  { path: '**', component: NotFoundComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
