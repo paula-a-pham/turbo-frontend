@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
+
+* {
+  font-family: "Tajawal", serif;
+  font-size: 1.125rem;
+}
+
+/* Font sizes */
+
+.txt-sm {
+  font-size: 0.875rem; /* 14px */
+}
+
+.txt-base {
+  font-size: 1rem; /* 16px */
+}
+
+.txt-lg {
+  font-size: 1.125rem; /* 18px */
+}
+
+.txt-xl {
+  font-size: 1.5rem; /* 24px */
+}
+
+.txt-xxl {
+  font-size: 2rem; /* 32px */
+}
+
+.txt-xxxl {
+  font-size: 2.5rem; /* 40px */
+}
+
+/* Font weights */
+
+.txt-light {
+  font-weight: 300; /* Light font weight */
+}
+
+.txt-normal {
+  font-weight: 400; /* Normal font weight */
+}
+
+.txt-medium {
+  font-weight: 500; /* Medium font weight */
+}
+
+.txt-semibold {
+  font-weight: 600; /* Semi-bold font weight */
+}
+
+.txt-bold {
+  font-weight: 700; /* Bold font weight */
+}
+
+.txt-bolder {
+  font-weight: 900; /* Extra bold font weight */
+}
