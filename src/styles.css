@@ -1,8 +1,13 @@
+@import "assets/styles/colors.css";
 @import "assets/styles/typography.css";
+@import "assets/styles/buttons.css";
 
 * {
   height: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
 }

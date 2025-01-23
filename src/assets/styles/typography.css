@@ -1,58 +1,67 @@
-@import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
 * {
-  font-family: "Tajawal", serif;
-  font-size: 1.125rem;
+  font-family: "Noto Sans", serif;
+  font-size: 1rem;
+  color: var(--white-90);
 }
 
 /* Font sizes */
 
-.txt-sm {
+.text-sm {
   font-size: 0.875rem; /* 14px */
 }
 
-.txt-base {
+.text-base {
   font-size: 1rem; /* 16px */
 }
 
-.txt-lg {
+.text-lg {
   font-size: 1.125rem; /* 18px */
 }
 
-.txt-xl {
+.text-xl {
   font-size: 1.5rem; /* 24px */
 }
 
-.txt-xxl {
+.text-xxl {
   font-size: 2rem; /* 32px */
 }
 
-.txt-xxxl {
+.text-xxxl {
   font-size: 2.5rem; /* 40px */
 }
 
 /* Font weights */
 
-.txt-light {
+.text-thin {
+  font-weight: 300; /* Thin font weight */
+}
+
+.text-extralight {
+  font-weight: 300; /* ExtraLight font weight */
+}
+
+.text-light {
   font-weight: 300; /* Light font weight */
 }
 
-.txt-normal {
+.text-normal {
   font-weight: 400; /* Normal font weight */
 }
 
-.txt-medium {
+.text-medium {
   font-weight: 500; /* Medium font weight */
 }
 
-.txt-semibold {
+.text-semibold {
   font-weight: 600; /* Semi-bold font weight */
 }
 
-.txt-bold {
+.text-bold {
   font-weight: 700; /* Bold font weight */
 }
 
-.txt-bolder {
+.text-bolder {
   font-weight: 900; /* Extra bold font weight */
 }

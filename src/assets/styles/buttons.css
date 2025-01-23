@@ -1,0 +1,37 @@
+.x-btn {
+  background-color: var(--black);
+  color: var(--white);
+  border: 1px solid var(--black);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.x-btn:hover {
+  background-color: var(--white-80);
+}
+
+.x-btn:active {
+  background-color: var(--white-80);
+}
+
+.x-btn-outline {
+  background-color: var(--white);
+  color: var(--white-90);
+  border: 1px solid var(--white-50);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.x-btn-outline:hover {
+  background-color: var(--white-5);
+}
+
+.x-btn-outline:active {
+  background-color: var(--white-5);
+}
