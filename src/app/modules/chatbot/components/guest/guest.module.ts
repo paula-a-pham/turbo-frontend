@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { GuestRoutingModule } from './guest-routing.module';
 import { GuestComponent } from './guest.component';
+import { ChatModule } from '../chat/chat.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { GuestComponent } from './guest.component';
   ],
   imports: [
     CommonModule,
-    GuestRoutingModule
+    GuestRoutingModule,
+    ChatModule
   ]
 })
 export class GuestModule { }
