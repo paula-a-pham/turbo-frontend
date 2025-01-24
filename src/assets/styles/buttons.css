@@ -2,8 +2,8 @@
   background-color: var(--black);
   color: var(--white);
   border: 1px solid var(--black);
-  padding: 0.5rem 1rem;
   border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
   font-size: 0.875rem;
   font-weight: 500;
   transition: background-color 0.3s ease;
@@ -20,7 +20,7 @@
 .x-btn-outline {
   background-color: var(--white);
   color: var(--white-90);
-  border: 1px solid var(--white-50);
+  border: 1px solid var(--white-40);
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
