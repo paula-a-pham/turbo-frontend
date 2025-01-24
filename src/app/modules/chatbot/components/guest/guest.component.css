@@ -1,0 +1,63 @@
+.guest-header {
+  padding: 1rem 0.5rem;
+}
+
+.new-chat {
+  color: var(--white-90);
+  background-color: transparent;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.new-chat:hover {
+  background-color: var(--white-5);
+}
+
+.auth-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.chat-container {
+  flex: 1;
+}
+
+.guest-footer {
+  position: relative;
+  padding: 1rem;
+  text-align: center;
+}
+
+.guest-footer span {
+  align-content: end;
+}
+
+.help-icon {
+  background-color: var(--white);
+  border: 1px solid var(--white-40);
+  border-radius: 0.5rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: auto;
+  margin: 0 1.5rem 1rem 0;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.help-icon:hover {
+  background-color: var(--white-5);
+}
+
+.help-icon svg {
+  fill: var(--white-80);
+  height: 0.75rem;
+  width: auto;
+}
