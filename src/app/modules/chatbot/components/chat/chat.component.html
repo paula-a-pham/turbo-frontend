@@ -1,1 +1,46 @@
-<p>chat works!</p>
+<div class="main-container">
+  <h3 class="h-auto regards text-semibold">How can I assist you today?</h3>
+
+  <section class="prompt-area">
+    <form>
+      <textarea
+        #promptInput
+        class="form-control prompt-input"
+        rows="1"
+        placeholder="Message Turbo"
+        (input)="adjustTextareaHeight($event)"
+      ></textarea>
+
+      <div
+        class="d-flex align-items-center justify-content-between w-100 h-auto"
+      >
+        <div class="attach-btn">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18 12.75H6C5.59 12.75 5.25 12.41 5.25 12C5.25 11.59 5.59 11.25 6 11.25H18C18.41 11.25 18.75 11.59 18.75 12C18.75 12.41 18.41 12.75 18 12.75Z"
+            />
+            <path
+              d="M12 18.75C11.59 18.75 11.25 18.41 11.25 18V6C11.25 5.59 11.59 5.25 12 5.25C12.41 5.25 12.75 5.59 12.75 6V18C12.75 18.41 12.41 18.75 12 18.75Z"
+            />
+          </svg>
+        </div>
+
+        <div class="send-btn">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.91 10.7199H14.82V3.5199C14.82 1.8399 13.91 1.4999 12.8 2.7599L12 3.6699L5.23001 11.3699C4.30001 12.4199 4.69001 13.2799 6.09001 13.2799H9.18001V20.4799C9.18001 22.1599 10.09 22.4999 11.2 21.2399L12 20.3299L18.77 12.6299C19.7 11.5799 19.31 10.7199 17.91 10.7199Z"
+            />
+          </svg>
+        </div>
+      </div>
+    </form>
+  </section>
+</div>

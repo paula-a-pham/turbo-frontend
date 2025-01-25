@@ -1,0 +1,94 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0 25%;
+}
+
+.regards {
+  text-align: center;
+}
+
+.prompt-area {
+  background-color: var(--white-5);
+  height: auto;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.prompt-area form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.prompt-input {
+  max-height: 120px;
+  width: 100%;
+  background-color: transparent;
+  line-height: 24px;
+  resize: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  overflow-y: auto;
+  transition: height 0.1s ease;
+}
+
+.attach-btn {
+  background-color: transparent;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.attach-btn:hover {
+  background-color: var(--white-10);
+}
+
+.attach-btn svg {
+  width: 2rem;
+}
+
+.attach-btn svg path {
+  fill: var(--white-50);
+}
+
+.send-btn {
+  background-color: var(--black);
+  border-radius: 0.5rem;
+  padding: 0 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.send-btn:hover {
+  background-color: var(--white-80);
+}
+
+.send-btn svg {
+  width: 1.5rem;
+}
+
+.send-btn svg path {
+  fill: var(--white);
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    justify-content: end;
+    padding: 0 5%;
+  }
+
+  .regards {
+    margin-bottom: auto;
+    margin-top: auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main-container {
+    padding: 0 10%;
+  }
+}
