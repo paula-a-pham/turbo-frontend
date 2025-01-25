@@ -75,6 +75,11 @@
   fill: var(--white);
 }
 
+::ng-deep .custom-tooltip {
+  height: auto;
+  margin-bottom: 0.25rem !important;
+}
+
 @media (max-width: 480px) {
   .main-container {
     justify-content: end;
