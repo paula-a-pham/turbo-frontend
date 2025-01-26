@@ -28,6 +28,7 @@
 
 .dropdown-menu {
   margin-bottom: 0.5rem !important;
+  border-radius: 0.5rem !important;
 }
 
 .dropdown-menu svg {
