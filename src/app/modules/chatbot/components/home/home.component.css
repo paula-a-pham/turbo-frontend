@@ -1,0 +1,39 @@
+.sidebar {
+  background-color: var(--white-5);
+  width: 18%;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+.top-sidebar-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo,
+.collapse-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.collapse-icon {
+  margin-left: auto;
+}
+
+.collapse-icon path {
+  fill: var(--white-90);
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.chat-container {
+  flex: 1;
+}
