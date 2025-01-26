@@ -20,8 +20,12 @@
   font-size: 1rem; /* 16px */
 }
 
-.text-lg {
+.text-l {
   font-size: 1.125rem; /* 18px */
+}
+
+.text-lg {
+  font-size: 1.3125rem; /* 21px */
 }
 
 .text-xl {
