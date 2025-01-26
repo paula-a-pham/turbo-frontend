@@ -1,0 +1,65 @@
+.bot-footer {
+  position: relative;
+  padding: 1rem;
+  text-align: center;
+}
+
+.help-icon {
+  background-color: var(--white);
+  border: 1px solid var(--white-40);
+  border-radius: 0.5rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: auto;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.help-icon:hover {
+  background-color: var(--white-5);
+}
+
+.help-icon svg {
+  fill: var(--white-80);
+  height: 0.75rem;
+}
+
+.dropdown-menu {
+  margin-bottom: 0.5rem !important;
+}
+
+.dropdown-menu svg {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.dropdown-menu svg path {
+  fill: var(--white-90);
+}
+
+.dropdown-item {
+  color: var(--white-90);
+  width: auto;
+  margin: 0.5rem;
+  padding: 0.5rem 2rem 0.5rem 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.dropdown-item:hover {
+  background-color: var(--white-5);
+}
+
+.dropdown-item:active {
+  background-color: var(--white-5);
+}
+
+@media (max-width: 480px) {
+  .help-icon {
+    display: none;
+  }
+}
