@@ -7,6 +7,8 @@
   align-items: center;
   justify-content: start;
   gap: 0.75rem;
+  overflow: hidden;
+  transition: width 0.3s ease;
 }
 
 .top-sidebar-container {
@@ -29,7 +31,7 @@
 }
 
 .collapse-icon path {
-  fill: var(--white-90);
+  fill: var(--white-70);
 }
 
 .new-chat {
@@ -113,4 +115,9 @@
   .sidebar {
     display: none;
   }
+}
+
+.sidebar-collapsed {
+  width: 0;
+  padding: 0;
 }
