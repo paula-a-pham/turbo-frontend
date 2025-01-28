@@ -380,7 +380,12 @@
       </ul>
     </div>
   </aside>
-  <section class="main-container">
+  <section
+    class="main-container"
+    [ngClass]="{
+      'main-containe-responsive': !sidebarCollapsed && viewportWidth <= 1024
+    }"
+  >
     <header class="home-header">
       <div *ngIf="sidebarCollapsed" class="home-header-left">
         <div class="expand-icon" (click)="toggleSidebarCollapsing()">
