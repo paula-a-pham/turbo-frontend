@@ -7,7 +7,12 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
   sidebarCollapsed!: boolean;
+
   constructor() {
     this.sidebarCollapsed = false;
+  }
+
+  toggleSidebarCollapsing(): void {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 }

@@ -12,15 +12,18 @@
 }
 
 .top-sidebar-container {
-  height: auto;
   width: 100%;
+  height: 2rem;
+  max-height: 2rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
 .logo,
-.collapse-icon {
+.collapse-icon,
+.expand-icon,
+.new-chat-icon {
   height: 1.5rem;
   width: 1.5rem;
 }
@@ -30,7 +33,9 @@
   cursor: pointer;
 }
 
-.collapse-icon path {
+.collapse-icon svg path,
+.expand-icon svg path,
+.new-chat-icon svg path {
   fill: var(--white-70);
 }
 
@@ -105,6 +110,34 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  padding: 1rem;
+  /* justify-content: start; */
+}
+.home-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.home-header-left,
+.home-header-right {
+  height: 2rem;
+  max-height: 2rem;
+}
+.home-header-right {
+  margin-left: auto;
+}
+.expand-icon,
+.new-chat-icon {
+  cursor: pointer;
+}
+.profile-avatar {
 }
 
 .chat-container {
