@@ -1,3 +1,14 @@
+a {
+  text-decoration: underline;
+  font-weight: 600;
+  opacity: 100%;
+  color: var(--black);
+  transition: opacity 0.1s ease;
+}
+a:hover {
+  opacity: 85%;
+}
+
 .x-btn {
   background-color: var(--black);
   color: var(--white);

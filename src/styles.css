@@ -1,7 +1,9 @@
 @import "assets/styles/colors.css";
 @import "assets/styles/buttons.css";
 @import "assets/styles/typography.css";
+@import "assets/styles/tables.css";
 @import "assets/styles/lists.css";
+@import "assets/styles/others.css";
 
 * {
   height: 100%;
