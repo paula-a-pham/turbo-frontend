@@ -1,10 +1,11 @@
 a {
+  color: var(--black);
   text-decoration: underline;
   font-weight: 600;
   opacity: 100%;
-  color: var(--black);
   transition: opacity 0.1s ease;
 }
+
 a:hover {
   opacity: 85%;
 }
@@ -21,17 +22,17 @@ a:hover {
 }
 
 .x-btn:hover {
-  background-color: var(--white-80);
+  background-color: var(--gray-120);
 }
 
 .x-btn:active {
-  background-color: var(--white-80);
+  background-color: var(--gray-120);
 }
 
 .x-btn-outline {
   background-color: var(--white);
-  color: var(--white-90);
-  border: 1px solid var(--white-40);
+  color: var(--gray-125);
+  border: 1px solid var(--gray-80);
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
@@ -40,9 +41,9 @@ a:hover {
 }
 
 .x-btn-outline:hover {
-  background-color: var(--white-5);
+  background-color: var(--gray-5);
 }
 
 .x-btn-outline:active {
-  background-color: var(--white-5);
+  background-color: var(--gray-5);
 }

@@ -3,12 +3,12 @@
 * {
   font-family: "Noto Sans", serif;
   font-size: 0.975rem;
-  color: var(--white-90);
+  color: var(--gray-125);
 }
 
 /* Font sizes */
 
-.text-s {
+.text-xs {
   font-size: 0.75rem; /* 12px */
 }
 
@@ -20,23 +20,23 @@
   font-size: 1rem; /* 16px */
 }
 
-.text-l {
+.text-lg {
   font-size: 1.125rem; /* 18px */
 }
 
-.text-lg {
+.text-xl {
   font-size: 1.3125rem; /* 21px */
 }
 
-.text-xl {
+.text-2xl {
   font-size: 1.5rem; /* 24px */
 }
 
-.text-xxl {
+.text-3xl {
   font-size: 2rem; /* 32px */
 }
 
-.text-xxxl {
+.text-4xl {
   font-size: 2.5rem; /* 40px */
 }
 
@@ -73,7 +73,9 @@
 .text-bolder {
   font-weight: 900; /* Extra bold font weight */
 }
+
 /* Global text alignment for all headings */
+
 h1,
 h2,
 h3,
@@ -85,6 +87,7 @@ h6 {
 }
 
 /* Base sizes for larger screens */
+
 h1 {
   font-size: 1.5rem;
   line-height: 3rem;
@@ -122,32 +125,38 @@ h6 {
 }
 
 /* Responsive adjustments */
+
 @media (max-width: 768px) {
   h1 {
     font-size: 1.4rem;
     line-height: 2.8rem;
     margin-top: 1.4rem;
   }
+
   h2 {
     font-size: 1.25rem;
     line-height: 2.6rem;
     margin-top: 1.25rem;
   }
+
   h3 {
     font-size: 1.1rem;
     line-height: 2.3rem;
     margin-top: 1.1rem;
   }
+
   h4 {
     font-size: 1rem;
     line-height: 2rem;
     margin-top: 1rem;
   }
+
   h5 {
     font-size: 0.95rem;
     line-height: 1.9rem;
     margin-top: 0.95rem;
   }
+
   h6 {
     font-size: 0.9rem;
     line-height: 1.8rem;
@@ -161,26 +170,31 @@ h6 {
     line-height: 2.7rem;
     margin-top: 1.3rem;
   }
+
   h2 {
     font-size: 1.2rem;
     line-height: 2.4rem;
     margin-top: 1.2rem;
   }
+
   h3 {
     font-size: 1.05rem;
     line-height: 2.1rem;
     margin-top: 1.05rem;
   }
+
   h4 {
     font-size: 0.95rem;
     line-height: 1.9rem;
     margin-top: 0.95rem;
   }
+
   h5 {
     font-size: 0.9rem;
     line-height: 1.8rem;
     margin-top: 0.9rem;
   }
+
   h6 {
     font-size: 0.85rem;
     line-height: 1.7rem;
