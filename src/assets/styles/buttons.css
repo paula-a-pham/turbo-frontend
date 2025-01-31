@@ -29,6 +29,11 @@ a:hover {
   background-color: var(--gray-120);
 }
 
+.x-btn:disabled {
+  background-color: var(--gray-115);
+  cursor: not-allowed;
+}
+
 .x-btn-outline {
   background-color: var(--white);
   color: var(--gray-125);
@@ -46,4 +51,9 @@ a:hover {
 
 .x-btn-outline:active {
   background-color: var(--gray-5);
+}
+
+.x-btn-outline:disabled {
+  background-color: var(--gray-10);
+  cursor: not-allowed;
 }
