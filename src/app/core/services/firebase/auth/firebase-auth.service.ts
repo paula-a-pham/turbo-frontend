@@ -10,6 +10,7 @@ import {
   User,
   UserCredential,
 } from '@angular/fire/auth';
+import { ILoginUser, INewUser } from '../../../../shared/models/iuser';
 
 @Injectable({
   providedIn: 'root',
@@ -21,16 +22,16 @@ export class FirebaseAuthService {
     return this.auth.currentUser;
   }
 
-  async createUserWithEmailAndPassword(
-    name: string,
-    email: string,
-    password: string
-  ): Promise<User | null> {
+  async createUserWithEmailAndPassword(user: INewUser): Promise<User | null> {
     try {
       const userCredential: UserCredential =
-        await createUserWithEmailAndPassword(this.auth, email, password);
+        await createUserWithEmailAndPassword(
+          this.auth,
+          user.email,
+          user.password
+        );
       if (userCredential.user) {
-        await this.updateUserName(userCredential.user, name);
+        await this.updateUserName(userCredential.user, user.name);
         return userCredential.user;
       }
     } catch (error) {
@@ -39,15 +40,12 @@ export class FirebaseAuthService {
     return null;
   }
 
-  async signInWithEmailAndPassword(
-    email: string,
-    password: string
-  ): Promise<User | null> {
+  async logInWithEmailAndPassword(user: ILoginUser): Promise<User | null> {
     try {
       const userCredential: UserCredential = await signInWithEmailAndPassword(
         this.auth,
-        email,
-        password
+        user.email,
+        user.password
       );
       if (userCredential.user) {
         return userCredential.user;
