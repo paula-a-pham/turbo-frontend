@@ -9,20 +9,49 @@
   </section>
 
   <section class="form-container">
-    <form>
+    <form [formGroup]="reactiveForm">
       <input
         type="email"
         class="form-control w-100"
+        [ngClass]="{
+          'is-valid': email?.valid,
+          'is-invalid': email?.invalid && email?.touched
+        }"
         id="email"
         placeholder="user@example.com"
+        formControlName="email"
       />
+      <span
+        *ngIf="email?.invalid && email?.touched"
+        class="text-sm text-danger w-100 validtion-error"
+      >
+        {{ getEmailErrorMessage() }}
+      </span>
       <input
         type="password"
         class="form-control w-100"
+        [ngClass]="{
+          'is-valid': password?.valid,
+          'is-invalid': password?.invalid && password?.touched
+        }"
         id="password"
         placeholder="password"
+        formControlName="password"
       />
-      <button type="submit" class="x-btn w-100">Login</button>
+      <span
+        *ngIf="password?.invalid && password?.touched"
+        class="text-sm text-danger w-100 validtion-error"
+      >
+        {{ getPasswordErrorMessage() }}
+      </span>
+      <button
+        type="submit"
+        class="x-btn w-100"
+        [disabled]="reactiveForm.invalid"
+        (click)="createUserWithEmailAndPassword()"
+      >
+        Login
+      </button>
     </form>
   </section>
 </div>

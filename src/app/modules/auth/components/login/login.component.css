@@ -32,6 +32,10 @@
   gap: 1rem;
 }
 
+.validtion-error {
+  margin-top: -0.5rem;
+}
+
 @media (max-width: 480px) {
   .form-container {
     width: 80%;
