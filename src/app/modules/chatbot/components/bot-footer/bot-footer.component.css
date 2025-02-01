@@ -21,7 +21,7 @@
 }
 
 .help-icon:hover {
-  background-color: var(--gray-5);
+  background-color: var(--gray-10);
 }
 
 .help-icon svg {
@@ -30,7 +30,7 @@
 }
 
 .dropdown-menu {
-  margin-bottom: 0.25rem !important;
+  margin-right: 0.25rem !important;
   border-radius: 0.5rem !important;
 }
 
@@ -55,11 +55,11 @@
 }
 
 .dropdown-item:hover {
-  background-color: var(--gray-5);
+  background-color: var(--gray-15);
 }
 
 .dropdown-item:active {
-  background-color: var(--gray-5);
+  background-color: var(--gray-15);
 }
 
 @media (max-width: 480px) {

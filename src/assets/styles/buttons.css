@@ -46,14 +46,14 @@ a:hover {
 }
 
 .x-btn-outline:hover {
-  background-color: var(--gray-5);
+  background-color: var(--gray-10);
 }
 
 .x-btn-outline:active {
-  background-color: var(--gray-5);
+  background-color: var(--gray-10);
 }
 
 .x-btn-outline:disabled {
-  background-color: var(--gray-10);
+  background-color: var(--gray-15);
   cursor: not-allowed;
 }
