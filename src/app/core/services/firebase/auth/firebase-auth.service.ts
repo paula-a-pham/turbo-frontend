@@ -35,7 +35,10 @@ export class FirebaseAuthService {
         return userCredential.user;
       }
     } catch (error) {
+      console.error(error);
       console.error('Unexpected error while creating a new user!');
+      const errorMessage: string = this.handleAuthErrors(error);
+      throw new Error(errorMessage);
     }
     return null;
   }
@@ -51,7 +54,10 @@ export class FirebaseAuthService {
         return userCredential.user;
       }
     } catch (error) {
+      console.error(error);
       console.error('Unexpected error while user login!');
+      const errorMessage: string = this.handleAuthErrors(error);
+      throw new Error(errorMessage);
     }
     return null;
   }
@@ -60,7 +66,10 @@ export class FirebaseAuthService {
     try {
       await updateEmail(user, newEmail);
     } catch (error) {
+      console.error(error);
       console.error('Unexpected error while updating user email!');
+      const errorMessage: string = this.handleAuthErrors(error);
+      throw new Error(errorMessage);
     }
   }
 
@@ -71,7 +80,10 @@ export class FirebaseAuthService {
     try {
       await updatePassword(user, newPassword);
     } catch (error) {
+      console.error(error);
       console.error('Unexpected error while updating user password!');
+      const errorMessage: string = this.handleAuthErrors(error);
+      throw new Error(errorMessage);
     }
   }
 
@@ -79,7 +91,10 @@ export class FirebaseAuthService {
     try {
       await updateProfile(user, { displayName: name });
     } catch (error) {
+      console.error(error);
       console.error('Unexpected error while updating user display name!');
+      const errorMessage: string = this.handleAuthErrors(error);
+      throw new Error(errorMessage);
     }
   }
 
@@ -87,7 +102,29 @@ export class FirebaseAuthService {
     try {
       await signOut(this.auth);
     } catch (error) {
+      console.error(error);
       console.error('Unexpected error while log out!');
+      const errorMessage: string = this.handleAuthErrors(error);
+      throw new Error(errorMessage);
+    }
+  }
+
+  handleAuthErrors(error: any): string {
+    switch (error.code) {
+      case 'auth/network-request-failed':
+        return 'Please check your internet connection and try again later.';
+
+      case 'auth/invalid-email':
+        return 'Invalid email address.';
+
+      case 'auth/email-already-in-use':
+        return 'This email already exists.';
+
+      case 'auth/invalid-credential':
+        return 'Invalid email or password.';
+
+      default:
+        return 'Unexpected error occured.';
     }
   }
 }
