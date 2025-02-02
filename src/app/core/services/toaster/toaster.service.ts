@@ -41,11 +41,11 @@ export class ToasterService {
     this.toasts.push(toast);
   }
 
-  remove(toast: IToast) {
+  remove(toast: IToast): void {
     this.toasts = this.toasts.filter((t) => t !== toast);
   }
 
-  clear() {
+  clear(): void {
     this.toasts.splice(0, this.toasts.length);
   }
 }

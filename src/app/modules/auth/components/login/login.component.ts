@@ -26,7 +26,6 @@ export class LoginComponent {
     });
   }
 
-
   get email() {
     return this.reactiveForm.get('email');
   }
@@ -53,7 +52,7 @@ export class LoginComponent {
     return '';
   }
 
-  async createUserWithEmailAndPassword(): Promise<void> {
+  async logInWithEmailAndPassword(): Promise<void> {
     const oldUser: ILoginUser = this.reactiveForm.value as ILoginUser;
     const user: User | null =
       await this.firebaseAuthService.logInWithEmailAndPassword(oldUser);
