@@ -34,6 +34,10 @@ a:hover {
   cursor: not-allowed;
 }
 
+.x-btn span {
+  color: var(--white);
+}
+
 .x-btn-outline {
   background-color: var(--white);
   color: var(--gray-125);
