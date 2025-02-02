@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
   updateEmail,
@@ -18,8 +19,20 @@ import { ILoginUser, INewUser } from '../../../../shared/models/iuser';
 export class FirebaseAuthService {
   constructor(private auth: Auth) {}
 
-  getCurrentUser(): User | null {
-    return this.auth.currentUser;
+  getCurrentUser(): Promise<User | null> {
+    return new Promise((resolve, reject) => {
+      const unsubscribe = onAuthStateChanged(
+        this.auth,
+        (user) => {
+          unsubscribe();
+          resolve(user);
+        },
+        (error) => {
+          unsubscribe();
+          reject(error);
+        }
+      );
+    });
   }
 
   async createUserWithEmailAndPassword(user: INewUser): Promise<User | null> {
