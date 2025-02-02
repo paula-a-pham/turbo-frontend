@@ -4,6 +4,7 @@ import { FirebaseAuthService } from '../../../../core/services/firebase/auth/fir
 import { ILoginUser } from '../../../../shared/models/iuser';
 import { User } from '@angular/fire/auth';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginComponent {
 
   constructor(
     private formbuilder: FormBuilder,
+    private router: Router,
     private toasterService: ToasterService,
     private firebaseAuthService: FirebaseAuthService
   ) {
@@ -81,6 +83,7 @@ export class LoginComponent {
       this.loading = false;
       if (user) {
         console.log('Done');
+        this.router.navigate(['/home'], { replaceUrl: true });
       } else {
         this.toasterService.showError({ message: 'Invalid Login.' });
       }
