@@ -47,11 +47,19 @@
       <button
         type="submit"
         class="x-btn w-100"
-        [disabled]="reactiveForm.invalid"
+        [disabled]="reactiveForm.invalid || loading"
         (click)="logInWithEmailAndPassword()"
       >
-        Log in
+        <span
+          *ngIf="loading"
+          class="spinner-border spinner-border-sm"
+          aria-hidden="true"
+        ></span>
+        <span *ngIf="loading" class="ms-2">loading</span>
+        <span *ngIf="!loading">Log in</span>
       </button>
     </form>
   </section>
 </div>
+
+<app-toaster></app-toaster>

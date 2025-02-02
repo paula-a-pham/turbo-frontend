@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseAuthService } from '../../../../core/services/firebase/auth/firebase-auth.service';
 import { ILoginUser } from '../../../../shared/models/iuser';
 import { User } from '@angular/fire/auth';
+import { ToasterService } from '../../../../core/services/toaster/toaster.service';
 
 @Component({
   selector: 'app-login',
@@ -11,12 +12,15 @@ import { User } from '@angular/fire/auth';
 })
 export class LoginComponent {
   reactiveForm!: FormGroup;
+  loading!: boolean;
 
   constructor(
     private formbuilder: FormBuilder,
+    private toasterService: ToasterService,
     private firebaseAuthService: FirebaseAuthService
   ) {
     this.initReactiveForm();
+    this.loading = false;
   }
 
   initReactiveForm(): void {
@@ -52,15 +56,39 @@ export class LoginComponent {
     return '';
   }
 
-  async logInWithEmailAndPassword(): Promise<void> {
-    const oldUser: ILoginUser = this.reactiveForm.value as ILoginUser;
-    const user: User | null =
-      await this.firebaseAuthService.logInWithEmailAndPassword(oldUser);
+  resetReactiveFormInputs(): void {
+    this.reactiveForm.reset();
+    this.reactiveForm.markAllAsTouched();
+  }
 
-    if (user) {
-      console.log('Done');
-    } else {
-      console.log('Error');
+  disableReactiveFormInputs(): void {
+    this.email?.disable();
+    this.password?.disable();
+  }
+
+  enableReactiveFormInputs(): void {
+    this.email?.enable();
+    this.password?.enable();
+  }
+
+  async logInWithEmailAndPassword(): Promise<void> {
+    this.loading = true;
+    this.disableReactiveFormInputs();
+    const oldUser: ILoginUser = this.reactiveForm.value as ILoginUser;
+    try {
+      const user: User | null =
+        await this.firebaseAuthService.logInWithEmailAndPassword(oldUser);
+      this.loading = false;
+      if (user) {
+        console.log('Done');
+      } else {
+        this.toasterService.showError({ message: 'Invalid Login.' });
+      }
+    } catch (error: any) {
+      this.loading = false;
+      this.resetReactiveFormInputs();
+      this.enableReactiveFormInputs();
+      this.toasterService.showError({ message: error.message });
     }
   }
 }
