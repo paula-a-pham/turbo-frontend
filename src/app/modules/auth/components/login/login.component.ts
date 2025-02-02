@@ -82,7 +82,6 @@ export class LoginComponent {
         await this.firebaseAuthService.logInWithEmailAndPassword(oldUser);
       this.loading = false;
       if (user) {
-        console.log('Done');
         this.router.navigate(['/home'], { replaceUrl: true });
       } else {
         this.toasterService.showError({ message: 'Invalid Login.' });

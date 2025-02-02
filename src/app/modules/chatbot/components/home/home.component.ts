@@ -28,7 +28,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onViewResize = (): void => {
     this.viewportWidth = window.innerWidth;
-    console.log('Viewport Width:', this.viewportWidth);
   };
 
   ngOnDestroy(): void {

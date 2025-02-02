@@ -87,7 +87,6 @@ export class SignUpComponent {
         await this.firebaseAuthService.createUserWithEmailAndPassword(newUser);
       this.loading = false;
       if (user) {
-        console.log('Done');
       } else {
         this.toasterService.showError({ message: 'Account not created.' });
       }

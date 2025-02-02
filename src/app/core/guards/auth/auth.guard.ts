@@ -7,7 +7,6 @@ export const authGuard: CanActivateFn = async (route, state) => {
   const router = inject(Router);
 
   const user = await firebaseAuthService.getCurrentUser();
-  console.log('Auth state from promise:', user);
 
   if (user) {
     if (state.url.startsWith('/auth') || state.url.startsWith('/guest')) {
