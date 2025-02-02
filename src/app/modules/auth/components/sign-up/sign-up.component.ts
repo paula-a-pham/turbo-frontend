@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseAuthService } from '../../../../core/services/firebase/auth/firebase-auth.service';
 import { INewUser, IUser } from '../../../../shared/models/iuser';
 import { User } from '@angular/fire/auth';
+import { ToasterService } from '../../../../core/services/toaster/toaster.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,12 +12,15 @@ import { User } from '@angular/fire/auth';
 })
 export class SignUpComponent {
   reactiveForm!: FormGroup;
+  loading!: boolean;
 
   constructor(
     private formbuilder: FormBuilder,
+    private toasterService: ToasterService,
     private firebaseAuthService: FirebaseAuthService
   ) {
     this.initReactiveForm();
+    this.loading = false;
   }
 
   initReactiveForm(): void {
@@ -57,15 +61,41 @@ export class SignUpComponent {
     return '';
   }
 
-  async createUserWithEmailAndPassword(): Promise<void> {
-    const newUser: INewUser = this.reactiveForm.value as INewUser;
-    const user: User | null =
-      await this.firebaseAuthService.createUserWithEmailAndPassword(newUser);
+  resetReactiveFormInputs(): void {
+    this.reactiveForm.reset();
+    this.reactiveForm.markAllAsTouched();
+  }
 
-    if (user) {
-      console.log('Done');
-    } else {
-      console.log('Error');
+  disableReactiveFormInputs(): void {
+    this.name?.disable();
+    this.email?.disable();
+    this.password?.disable();
+  }
+
+  enableReactiveFormInputs(): void {
+    this.name?.enable();
+    this.email?.enable();
+    this.password?.enable();
+  }
+
+  async createUserWithEmailAndPassword(): Promise<void> {
+    this.loading = true;
+    this.disableReactiveFormInputs();
+    const newUser: INewUser = this.reactiveForm.value as INewUser;
+    try {
+      const user: User | null =
+        await this.firebaseAuthService.createUserWithEmailAndPassword(newUser);
+      this.loading = false;
+      if (user) {
+        console.log('Done');
+      } else {
+        this.toasterService.showError({ message: 'Account not created.' });
+      }
+    } catch (error: any) {
+      this.loading = false;
+      this.resetReactiveFormInputs();
+      this.enableReactiveFormInputs();
+      this.toasterService.showError({ message: error.message });
     }
   }
 }

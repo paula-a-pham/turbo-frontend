@@ -63,11 +63,19 @@
       <button
         type="submit"
         class="x-btn w-100"
-        [disabled]="reactiveForm.invalid"
+        [disabled]="reactiveForm.invalid || loading"
         (click)="createUserWithEmailAndPassword()"
       >
-        Sign up
+        <span
+          *ngIf="loading"
+          class="spinner-border spinner-border-sm"
+          aria-hidden="true"
+        ></span>
+        <span *ngIf="loading" class="ms-2">loading</span>
+        <span *ngIf="!loading">Sign up</span>
       </button>
     </form>
   </section>
 </div>
+
+<app-toaster></app-toaster>
