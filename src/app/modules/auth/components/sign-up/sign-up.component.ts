@@ -4,6 +4,7 @@ import { FirebaseAuthService } from '../../../../core/services/firebase/auth/fir
 import { INewUser, IUser } from '../../../../shared/models/iuser';
 import { User } from '@angular/fire/auth';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -16,6 +17,7 @@ export class SignUpComponent {
 
   constructor(
     private formbuilder: FormBuilder,
+    private router: Router,
     private toasterService: ToasterService,
     private firebaseAuthService: FirebaseAuthService
   ) {
@@ -87,6 +89,7 @@ export class SignUpComponent {
         await this.firebaseAuthService.createUserWithEmailAndPassword(newUser);
       this.loading = false;
       if (user) {
+        this.router.navigate(['/home'], { replaceUrl: true });
       } else {
         this.toasterService.showError({ message: 'Account not created.' });
       }
