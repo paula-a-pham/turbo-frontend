@@ -3,6 +3,8 @@ import { FirebaseAuthService } from '../../../../core/services/firebase/auth/fir
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
+import { User } from '@angular/fire/auth';
+import { IUser } from '../../../../shared/models/iuser';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +14,7 @@ import { ToasterService } from '../../../../core/services/toaster/toaster.servic
 export class HomeComponent implements OnInit, OnDestroy {
   sidebarCollapsed!: boolean;
   viewportWidth!: number;
+  currentUser!: IUser;
 
   constructor(
     private router: Router,
@@ -23,7 +26,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.viewportWidth = 0;
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.getCurrentUser();
+
     this.viewportWidth = window.innerWidth;
     if (this.viewportWidth <= 1024) {
       this.sidebarCollapsed = true;
@@ -50,6 +55,21 @@ export class HomeComponent implements OnInit, OnDestroy {
       modalDialogClass: 'custom-modal',
       size: 'sm',
     });
+  }
+
+  async getCurrentUser(): Promise<void> {
+    try {
+      const user: User | null = await this.firebaseAuthService.getCurrentUser();
+      if (user) {
+        this.currentUser = {
+          uid: user.uid,
+          name: user.displayName!,
+          email: user.email!,
+        };
+      }
+    } catch (error: any) {
+      console.error(error.message);
+    }
   }
 
   async logout(): Promise<void> {
