@@ -1,7 +1,7 @@
 /* Base Components */
 
 hr {
-  margin: 2rem 0;
+  /* margin: 2rem 0; */
 }
 
 /* Angular Components */
@@ -16,4 +16,8 @@ app-toaster {
   flex-direction: column;
   gap: 0.5rem;
   z-index: 1200;
+}
+
+.custom-modal {
+  height: auto;
 }
