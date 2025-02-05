@@ -22,15 +22,18 @@ a:hover {
 }
 
 .x-btn:hover {
-  background-color: var(--gray-120);
+  background-color: var(--gray-125);
+  border-color: var(--gray-125);
 }
 
 .x-btn:active {
-  background-color: var(--gray-120);
+  background-color: var(--gray-125);
+  border-color: var(--gray-125);
 }
 
 .x-btn:disabled {
-  background-color: var(--gray-115);
+  background-color: var(--gray-120);
+  border-color: var(--gray-120);
   cursor: not-allowed;
 }
 
@@ -60,4 +63,35 @@ a:hover {
 .x-btn-outline:disabled {
   background-color: var(--gray-15);
   cursor: not-allowed;
+}
+
+.x-btn-danger {
+  background-color: #da2c43;
+  color: var(--white);
+  border: 1px solid #da2c43;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.x-btn-danger:hover {
+  background-color: #c4283c;
+  border-color: #c4283c;
+}
+
+.x-btn-danger:active {
+  background-color: #c4283c;
+  border-color: #c4283c;
+}
+
+.x-btn-danger:disabled {
+  background-color: #e15669;
+  border-color: #e15669;
+  cursor: not-allowed;
+}
+
+.x-btn-danger span {
+  color: var(--white);
 }
