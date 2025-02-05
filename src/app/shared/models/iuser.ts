@@ -1,9 +1,12 @@
 export interface IUser {
+  uid: string;
+  name: string;
   email: string;
 }
 
-export interface INewUser extends IUser {
+export interface INewUser {
   name: string;
+  email: string;
   password: string;
 }
 
