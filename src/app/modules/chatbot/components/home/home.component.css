@@ -212,3 +212,9 @@
   width: 0;
   padding: 0;
 }
+
+.x-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

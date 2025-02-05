@@ -6,6 +6,7 @@ import { HomeComponent } from './home.component';
 import { ChatModule } from '../chat/chat.module';
 import { BotHeaderModule } from '../bot-header/bot-header.module';
 import { BotFooterModule } from '../bot-footer/bot-footer.module';
+import { SharedModule } from '../../../../shared/shared.module';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -15,6 +16,7 @@ import { BotFooterModule } from '../bot-footer/bot-footer.module';
     ChatModule,
     BotHeaderModule,
     BotFooterModule,
+    SharedModule,
   ],
 })
 export class HomeModule {}
