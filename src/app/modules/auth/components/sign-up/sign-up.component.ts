@@ -12,9 +12,11 @@ import { Router } from '@angular/router';
   styleUrl: './sign-up.component.css',
 })
 export class SignUpComponent {
+  // declare component variables
   reactiveForm!: FormGroup;
   loading!: boolean;
 
+  // inject needed services and initalize component variables
   constructor(
     private formbuilder: FormBuilder,
     private router: Router,
@@ -25,6 +27,7 @@ export class SignUpComponent {
     this.loading = false;
   }
 
+  // define reactive form fields
   initReactiveForm(): void {
     this.reactiveForm = this.formbuilder.group({
       name: ['', [Validators.required]],
@@ -33,6 +36,7 @@ export class SignUpComponent {
     });
   }
 
+  // getters functions for reactive form fields
   get name() {
     return this.reactiveForm.get('name');
   }
@@ -43,6 +47,7 @@ export class SignUpComponent {
     return this.reactiveForm.get('password');
   }
 
+  // get error messages for reactive form fields based on the field state
   getEmailErrorMessage(): string {
     if (this.email?.errors?.['required']) {
       return 'This field required!';
@@ -52,7 +57,6 @@ export class SignUpComponent {
     }
     return '';
   }
-
   getPasswordErrorMessage(): string {
     if (this.password?.errors?.['required']) {
       return 'This field required!';
@@ -63,32 +67,41 @@ export class SignUpComponent {
     return '';
   }
 
+  // reset reactive form with all fields to the default state
+  // and then mark all field as touched to display errors borders incase invalid sign up
   resetReactiveFormInputs(): void {
     this.reactiveForm.reset();
     this.reactiveForm.markAllAsTouched();
   }
 
+  // disable reactive form fields when sign up button clicked to prevent the user from write any thing
+  // for accurate sign up process
   disableReactiveFormInputs(): void {
     this.name?.disable();
     this.email?.disable();
     this.password?.disable();
   }
 
+  // enable reactive form fields after invalid account creation to enable the user to sign up again with correct credentials
   enableReactiveFormInputs(): void {
     this.name?.enable();
     this.email?.enable();
     this.password?.enable();
   }
 
+  // start the sign up process
   async createUserWithEmailAndPassword(): Promise<void> {
     this.loading = true;
     this.disableReactiveFormInputs();
+    // get reactive form value as an object of new user
     const newUser: INewUser = this.reactiveForm.value as INewUser;
+    // handle errors using try and catch
     try {
       const user: User | null =
         await this.firebaseAuthService.createUserWithEmailAndPassword(newUser);
       this.loading = false;
       if (user) {
+        // navigate to the user profile when valid account creation
         this.router.navigate(['/home'], { replaceUrl: true });
       } else {
         this.toasterService.showError({ message: 'Account not created.' });
