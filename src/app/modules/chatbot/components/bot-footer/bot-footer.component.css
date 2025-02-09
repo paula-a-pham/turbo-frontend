@@ -39,10 +39,6 @@
   width: 1.25rem;
 }
 
-.dropdown-menu svg path {
-  fill: var(--gray-125);
-}
-
 .dropdown-item {
   color: var(--gray-125);
   width: auto;

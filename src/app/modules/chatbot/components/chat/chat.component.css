@@ -54,10 +54,6 @@
   width: 1.5rem;
 }
 
-.attach-btn svg path {
-  fill: var(--gray-110);
-}
-
 .send-btn {
   background-color: var(--black);
   border-radius: 0.5rem;
@@ -155,10 +151,6 @@
 .bubble-action svg {
   width: 1rem;
   height: 1rem;
-}
-
-.bubble-action svg path {
-  fill: var(--gray-110);
 }
 
 .prompt-bubble {

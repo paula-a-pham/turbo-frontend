@@ -32,12 +32,6 @@
   cursor: pointer;
 }
 
-.collapse-icon svg path,
-.expand-icon svg path,
-.new-chat-icon svg path {
-  fill: var(--gray-110);
-}
-
 .new-chat {
   background-color: var(--gray-25);
   height: auto;
@@ -96,10 +90,6 @@
   width: 1.5rem;
   margin-left: 0.5rem;
   visibility: hidden;
-}
-
-.history-item-actions path {
-  fill: var(--gray-110);
 }
 
 .history-item:hover {
@@ -165,10 +155,6 @@
 .dropdown-menu svg {
   height: 1.25rem;
   width: 1.25rem;
-}
-
-.dropdown-menu svg path {
-  fill: var(--gray-125);
 }
 
 .dropdown-item {
