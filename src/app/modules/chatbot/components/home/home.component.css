@@ -12,23 +12,27 @@
 
 .top-sidebar-container {
   width: 100%;
-  height: 2rem;
-  max-height: 2rem;
+  height: auto;
+  /* max-height: 2rem; */
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
 .logo,
-.collapse-icon,
-.expand-icon,
-.new-chat-icon {
+.collapse-icon svg,
+.expand-icon svg,
+.new-chat-icon svg {
   height: 1.5rem;
   width: 1.5rem;
 }
 
 .collapse-icon {
   margin-left: auto;
+}
+.collapse-icon,
+.expand-icon,
+.new-chat-icon {
   cursor: pointer;
 }
 
@@ -129,11 +133,6 @@
 
 .home-header-right {
   margin-left: auto;
-}
-
-.expand-icon,
-.new-chat-icon {
-  cursor: pointer;
 }
 
 .profile-avatar {
