@@ -136,9 +136,11 @@
 }
 
 .profile-avatar {
-  background-color: var(--gray-20);
-  color: var(--gray-115);
-  padding: 1rem 0.5rem;
+  background-color: var(--gray-25);
+  color: var(--gray-110);
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
