@@ -1,21 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseAuthService } from '../../../../core/services/firebase/auth/firebase-auth.service';
 import { INewUser } from '../../../../shared/models/iuser';
 import { User, UserCredential } from '@angular/fire/auth';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
 import { Router } from '@angular/router';
-import { lastValueFrom, Subscription } from 'rxjs';
+import { lastValueFrom, Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnDestroy {
   // declare component variables
   reactiveForm!: FormGroup;
   loading!: boolean;
+
+  // create subject that emits a signal when the service is destroyed
+  private destroy$: Subject<void> = new Subject<void>();
 
   // inject needed services and initalize component variables
   constructor(
@@ -108,20 +111,19 @@ export class SignUpComponent {
         } else {
           this.toasterService.showError({ message: 'Account not created.' });
         }
-        subscription.unsubscribe();
       },
       error: (error: any) => {
         this.loading = false;
         this.resetReactiveFormInputs();
         this.enableReactiveFormInputs();
         this.toasterService.showError({ message: error.message });
-        subscription.unsubscribe();
       },
     };
 
     // subscribe to the login observable
-    const subscription: Subscription = this.firebaseAuthService
+    this.firebaseAuthService
       .createUserWithEmailAndPassword(newUser)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(observer);
   }
 
@@ -132,5 +134,13 @@ export class SignUpComponent {
     ).catch((error: any) => {
       this.toasterService.showError({ message: error.message });
     });
+  }
+
+  ngOnDestroy() {
+    // emit a value to notify subscribers that they should clean up their subscriptions
+    this.destroy$.next();
+
+    // complete the subject to release resources and prevent memory leaks
+    this.destroy$.complete();
   }
 }
