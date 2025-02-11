@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseAuthService } from '../../../../core/services/firebase/auth/firebase-auth.service';
-import { INewUser, IUser } from '../../../../shared/models/iuser';
-import { User } from '@angular/fire/auth';
+import { INewUser } from '../../../../shared/models/iuser';
+import { User, UserCredential } from '@angular/fire/auth';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
 import { Router } from '@angular/router';
+import { lastValueFrom, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
@@ -90,27 +91,46 @@ export class SignUpComponent {
   }
 
   // start the sign up process
-  async createUserWithEmailAndPassword(): Promise<void> {
+  createUserWithEmailAndPassword(): void {
     this.loading = true;
     this.disableReactiveFormInputs();
     // get reactive form value as an object of new user
     const newUser: INewUser = this.reactiveForm.value as INewUser;
-    // handle errors using try and catch
-    try {
-      const user: User | null =
-        await this.firebaseAuthService.createUserWithEmailAndPassword(newUser);
-      this.loading = false;
-      if (user) {
-        // navigate to the user profile when valid account creation
-        this.router.navigate(['/home'], { replaceUrl: true });
-      } else {
-        this.toasterService.showError({ message: 'Account not created.' });
-      }
-    } catch (error: any) {
-      this.loading = false;
-      this.resetReactiveFormInputs();
-      this.enableReactiveFormInputs();
+
+    // define observer actions
+    const observer = {
+      next: async (userCredential: UserCredential) => {
+        this.loading = false;
+        if (userCredential.user) {
+          await this.updateUserDisplayName(userCredential.user, newUser.name);
+          // navigate to the user profile when valid account creation
+          this.router.navigate(['/home'], { replaceUrl: true });
+        } else {
+          this.toasterService.showError({ message: 'Account not created.' });
+        }
+        subscription.unsubscribe();
+      },
+      error: (error: any) => {
+        this.loading = false;
+        this.resetReactiveFormInputs();
+        this.enableReactiveFormInputs();
+        this.toasterService.showError({ message: error.message });
+        subscription.unsubscribe();
+      },
+    };
+
+    // subscribe to the login observable
+    const subscription: Subscription = this.firebaseAuthService
+      .createUserWithEmailAndPassword(newUser)
+      .subscribe(observer);
+  }
+
+  // update user display name
+  async updateUserDisplayName(user: User, name: string): Promise<void> {
+    return lastValueFrom(
+      this.firebaseAuthService.updateUserDisplayName(user, name)
+    ).catch((error: any) => {
       this.toasterService.showError({ message: error.message });
-    }
+    });
   }
 }

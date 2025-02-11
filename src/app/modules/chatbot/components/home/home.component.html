@@ -1,4 +1,4 @@
-<div class="d-flex">
+<div class="d-flex" *ngIf="currentUser">
   <aside class="sidebar" [ngClass]="{ 'sidebar-collapsed': sidebarCollapsed }">
     <div *ngIf="!sidebarCollapsed" class="top-sidebar-container">
       <img
@@ -432,7 +432,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            {{ currentUser.name[0] | titlecase }}
+            {{ currentUser.displayName[0] | titlecase }}
           </button>
           <ul class="dropdown-menu h-auto">
             <li>

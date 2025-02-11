@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
 import { User } from '@angular/fire/auth';
 import { IUser } from '../../../../shared/models/iuser';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ import { IUser } from '../../../../shared/models/iuser';
 export class HomeComponent implements OnInit, OnDestroy {
   sidebarCollapsed!: boolean;
   viewportWidth!: number;
-  currentUser!: IUser;
+  currentUser?: IUser;
 
   constructor(
     private router: Router,
@@ -27,7 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.getCurrentUser();
+    this.getCurrentUser();
 
     this.viewportWidth = window.innerWidth;
     if (this.viewportWidth <= 1024) {
@@ -57,29 +58,42 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  async getCurrentUser(): Promise<void> {
-    try {
-      const user: User | null = await this.firebaseAuthService.getCurrentUser();
-      if (user) {
-        this.currentUser = {
-          uid: user.uid,
-          name: user.displayName!,
-          email: user.email!,
-        };
-      }
-    } catch (error: any) {
-      console.error(error.message);
-    }
+  getCurrentUser(): void {
+    const observer = {
+      next: async (user: User | null) => {
+        if (user) {
+          this.currentUser = user as IUser;
+        } else {
+          this.logout();
+          subscription.unsubscribe();
+        }
+      },
+      error: (error: any) => {
+        this.toasterService.showError({ message: error.message });
+        subscription.unsubscribe();
+      },
+    };
+    const subscription: Subscription = this.firebaseAuthService
+      .getCurrentUser()
+      .subscribe(observer);
   }
 
-  async logout(): Promise<void> {
-    try {
-      await this.firebaseAuthService.logout();
-      this.modalService.dismissAll();
-      this.router.navigate(['/'], { replaceUrl: true });
-    } catch (error: any) {
-      this.toasterService.showError({ message: error.message });
-    }
+  logout(): void {
+    const observer = {
+      next: () => {
+        this.modalService.dismissAll();
+        this.router.navigate(['/'], { replaceUrl: true });
+        subscription.unsubscribe();
+      },
+      error: (error: any) => {
+        this.modalService.dismissAll();
+        this.toasterService.showError({ message: error.message });
+        subscription.unsubscribe();
+      },
+    };
+    const subscription: Subscription = this.firebaseAuthService
+      .logout()
+      .subscribe(observer);
   }
 
   ngOnDestroy(): void {

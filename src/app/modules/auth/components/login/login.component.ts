@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseAuthService } from '../../../../core/services/firebase/auth/firebase-auth.service';
 import { ILoginUser } from '../../../../shared/models/iuser';
-import { User } from '@angular/fire/auth';
+import { UserCredential } from '@angular/fire/auth';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -84,27 +85,36 @@ export class LoginComponent {
   }
 
   // start the login process
-  async logInWithEmailAndPassword(): Promise<void> {
+  logInWithEmailAndPassword(): void {
     this.loading = true;
     this.disableReactiveFormInputs();
     // get reactive form value as an object of login user
     const oldUser: ILoginUser = this.reactiveForm.value as ILoginUser;
-    // handle errors using try and catch
-    try {
-      const user: User | null =
-        await this.firebaseAuthService.logInWithEmailAndPassword(oldUser);
-      this.loading = false;
-      if (user) {
-        // navigate to the user profile when valid login
-        this.router.navigate(['/home'], { replaceUrl: true });
-      } else {
-        this.toasterService.showError({ message: 'Invalid Login.' });
-      }
-    } catch (error: any) {
-      this.loading = false;
-      this.resetReactiveFormInputs();
-      this.enableReactiveFormInputs();
-      this.toasterService.showError({ message: error.message });
-    }
+
+    // define observer actions
+    const observer = {
+      next: (userCredential: UserCredential) => {
+        this.loading = false;
+        if (userCredential.user) {
+          // navigate to the user profile when valid login credentials
+          this.router.navigate(['/home'], { replaceUrl: true });
+        } else {
+          this.toasterService.showError({ message: 'Invalid Login.' });
+        }
+        subscription.unsubscribe();
+      },
+      error: (error: any) => {
+        this.loading = false;
+        this.resetReactiveFormInputs();
+        this.enableReactiveFormInputs();
+        this.toasterService.showError({ message: error.message });
+        subscription.unsubscribe();
+      },
+    };
+
+    // subscribe to the login observable
+    const subscription: Subscription = this.firebaseAuthService
+      .logInWithEmailAndPassword(oldUser)
+      .subscribe(observer);
   }
 }
