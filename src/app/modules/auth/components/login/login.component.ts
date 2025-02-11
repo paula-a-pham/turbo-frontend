@@ -1,21 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseAuthService } from '../../../../core/services/firebase/auth/firebase-auth.service';
 import { ILoginUser } from '../../../../shared/models/iuser';
 import { UserCredential } from '@angular/fire/auth';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   // declare component variables
   reactiveForm!: FormGroup;
   loading!: boolean;
+
+  // create subject that emits a signal when the service is destroyed
+  private destroy$: Subject<void> = new Subject<void>();
 
   // inject needed services and initalize component variables
   constructor(
@@ -101,20 +104,27 @@ export class LoginComponent {
         } else {
           this.toasterService.showError({ message: 'Invalid Login.' });
         }
-        subscription.unsubscribe();
       },
       error: (error: any) => {
         this.loading = false;
         this.resetReactiveFormInputs();
         this.enableReactiveFormInputs();
         this.toasterService.showError({ message: error.message });
-        subscription.unsubscribe();
       },
     };
 
     // subscribe to the login observable
-    const subscription: Subscription = this.firebaseAuthService
+    this.firebaseAuthService
       .logInWithEmailAndPassword(oldUser)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(observer);
+  }
+
+  ngOnDestroy() {
+    // emit a value to notify subscribers that they should clean up their subscriptions
+    this.destroy$.next();
+
+    // complete the subject to release resources and prevent memory leaks
+    this.destroy$.complete();
   }
 }
