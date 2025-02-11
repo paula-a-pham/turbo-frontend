@@ -5,7 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
 import { User } from '@angular/fire/auth';
 import { IUser } from '../../../../shared/models/iuser';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
+import { SubscriptionService } from '../../../../core/services/subscription/subscription.service';
 
 @Component({
   selector: 'app-home',
@@ -17,11 +18,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   viewportWidth!: number;
   currentUser?: IUser;
 
+  // create subject that emits a signal when the service is destroyed
+  private destroy$: Subject<void> = new Subject<void>();
+
   constructor(
     private router: Router,
     private modalService: NgbModal,
     private toasterService: ToasterService,
-    private firebaseAuthService: FirebaseAuthService
+    private firebaseAuthService: FirebaseAuthService,
+    private subscriptionService: SubscriptionService
   ) {
     this.sidebarCollapsed = false;
     this.viewportWidth = 0;
@@ -65,16 +70,15 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.currentUser = user as IUser;
         } else {
           this.logout();
-          subscription.unsubscribe();
         }
       },
       error: (error: any) => {
         this.toasterService.showError({ message: error.message });
-        subscription.unsubscribe();
       },
     };
-    const subscription: Subscription = this.firebaseAuthService
+    this.firebaseAuthService
       .getCurrentUser()
+      .pipe(takeUntil(this.subscriptionService.destroySignal))
       .subscribe(observer);
   }
 
@@ -83,20 +87,25 @@ export class HomeComponent implements OnInit, OnDestroy {
       next: () => {
         this.modalService.dismissAll();
         this.router.navigate(['/'], { replaceUrl: true });
-        subscription.unsubscribe();
       },
       error: (error: any) => {
         this.modalService.dismissAll();
         this.toasterService.showError({ message: error.message });
-        subscription.unsubscribe();
       },
     };
-    const subscription: Subscription = this.firebaseAuthService
+    this.firebaseAuthService
       .logout()
+      .pipe(takeUntil(this.destroy$))
       .subscribe(observer);
   }
 
   ngOnDestroy(): void {
     window.removeEventListener('resize', this.onViewResize);
+
+    // emit a value to notify subscribers that they should clean up their subscriptions
+    this.destroy$.next();
+
+    // complete the subject to release resources and prevent memory leaks
+    this.destroy$.complete();
   }
 }
