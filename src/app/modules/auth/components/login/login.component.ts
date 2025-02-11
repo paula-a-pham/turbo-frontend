@@ -5,7 +5,7 @@ import { ILoginUser } from '../../../../shared/models/iuser';
 import { UserCredential } from '@angular/fire/auth';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
 import { Router } from '@angular/router';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-login',

@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
 import { User } from '@angular/fire/auth';
 import { IUser } from '../../../../shared/models/iuser';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { SubscriptionService } from '../../../../core/services/subscription/subscription.service';
 
 @Component({

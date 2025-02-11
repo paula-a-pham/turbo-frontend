@@ -5,7 +5,7 @@ import { INewUser } from '../../../../shared/models/iuser';
 import { User, UserCredential } from '@angular/fire/auth';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
 import { Router } from '@angular/router';
-import { lastValueFrom, Subject, Subscription, takeUntil } from 'rxjs';
+import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
