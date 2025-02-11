@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
   Auth,
+  authState,
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
   updateEmail,
@@ -12,132 +12,85 @@ import {
   UserCredential,
 } from '@angular/fire/auth';
 import { ILoginUser, INewUser } from '../../../../shared/models/iuser';
+import { catchError, from, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseAuthService {
+  // inject firebase auth service
   constructor(private auth: Auth) {}
 
-  getCurrentUser(): Promise<User | null> {
-    return new Promise((resolve, reject) => {
-      const unsubscribe = onAuthStateChanged(
-        this.auth,
-        (user) => {
-          unsubscribe();
-          resolve(user);
-        },
-        (error) => {
-          unsubscribe();
-          reject(error);
-        }
-      );
-    });
+  // create all firebase auth methods as observables
+  getCurrentUser(): Observable<User | null> {
+    return authState(this.auth).pipe(
+      catchError(this.handleAuthErrors.bind(this))
+    );
   }
 
-  async createUserWithEmailAndPassword(user: INewUser): Promise<User | null> {
-    try {
-      const userCredential: UserCredential =
-        await createUserWithEmailAndPassword(
-          this.auth,
-          user.email,
-          user.password
-        );
-      if (userCredential.user) {
-        await this.updateUserName(userCredential.user, user.name);
-        return userCredential.user;
-      }
-    } catch (error) {
-      console.error(error);
-      console.error('Unexpected error while creating a new user!');
-      const errorMessage: string = this.handleAuthErrors(error);
-      throw new Error(errorMessage);
-    }
-    return null;
+  createUserWithEmailAndPassword(user: INewUser): Observable<UserCredential> {
+    return from(
+      createUserWithEmailAndPassword(this.auth, user.email, user.password)
+    ).pipe(catchError(this.handleAuthErrors.bind(this)));
   }
 
-  async logInWithEmailAndPassword(user: ILoginUser): Promise<User | null> {
-    try {
-      const userCredential: UserCredential = await signInWithEmailAndPassword(
-        this.auth,
-        user.email,
-        user.password
-      );
-      if (userCredential.user) {
-        return userCredential.user;
-      }
-    } catch (error) {
-      console.error(error);
-      console.error('Unexpected error while user login!');
-      const errorMessage: string = this.handleAuthErrors(error);
-      throw new Error(errorMessage);
-    }
-    return null;
+  logInWithEmailAndPassword(user: ILoginUser): Observable<UserCredential> {
+    return from(
+      signInWithEmailAndPassword(this.auth, user.email, user.password)
+    ).pipe(catchError(this.handleAuthErrors.bind(this)));
   }
 
-  async updateCurrentUserEmail(user: User, newEmail: string): Promise<void> {
-    try {
-      await updateEmail(user, newEmail);
-    } catch (error) {
-      console.error(error);
-      console.error('Unexpected error while updating user email!');
-      const errorMessage: string = this.handleAuthErrors(error);
-      throw new Error(errorMessage);
-    }
+  updateCurrentUserEmail(user: User, newEmail: string): Observable<void> {
+    return from(updateEmail(user, newEmail)).pipe(
+      catchError(this.handleAuthErrors.bind(this))
+    );
   }
 
-  async updateCurrentUserPassword(
-    user: User,
-    newPassword: string
-  ): Promise<void> {
-    try {
-      await updatePassword(user, newPassword);
-    } catch (error) {
-      console.error(error);
-      console.error('Unexpected error while updating user password!');
-      const errorMessage: string = this.handleAuthErrors(error);
-      throw new Error(errorMessage);
-    }
+  updateCurrentUserPassword(user: User, newPassword: string): Observable<void> {
+    return from(updatePassword(user, newPassword)).pipe(
+      catchError(this.handleAuthErrors.bind(this))
+    );
   }
 
-  async updateUserName(user: User, name: string): Promise<void> {
-    try {
-      await updateProfile(user, { displayName: name });
-    } catch (error) {
-      console.error(error);
-      console.error('Unexpected error while updating user display name!');
-      const errorMessage: string = this.handleAuthErrors(error);
-      throw new Error(errorMessage);
-    }
+  updateUserDisplayName(user: User, name: string): Observable<void> {
+    return from(updateProfile(user, { displayName: name })).pipe(
+      catchError(this.handleAuthErrors.bind(this))
+    );
   }
 
-  async logout(): Promise<void> {
-    try {
-      await signOut(this.auth);
-    } catch (error) {
-      console.error(error);
-      console.error('Unexpected error while log out!');
-      const errorMessage: string = this.handleAuthErrors(error);
-      throw new Error(errorMessage);
-    }
+  logout(): Observable<void> {
+    return from(signOut(this.auth)).pipe(
+      catchError(this.handleAuthErrors.bind(this))
+    );
   }
 
-  handleAuthErrors(error: any): string {
+  // handle auth errors
+  handleAuthErrors(error: any): Observable<never> {
     switch (error.code) {
       case 'auth/network-request-failed':
-        return 'Please check your internet connection and try again later.';
+        console.error(error);
+        return throwError(
+          () =>
+            new Error(
+              'Please check your internet connection and try again later.'
+            )
+        );
 
       case 'auth/invalid-email':
-        return 'Invalid email address.';
+        console.error(error);
+        return throwError(() => new Error('Invalid email address.'));
 
       case 'auth/email-already-in-use':
-        return 'This email already exists.';
+        console.error(error);
+        return throwError(() => new Error('This email already exists.'));
 
       case 'auth/invalid-credential':
-        return 'Invalid email or password.';
+        console.error(error);
+        return throwError(() => new Error('Invalid email or password.'));
 
       default:
-        return 'Unexpected error occured.';
+        console.error(error);
+        return throwError(() => new Error('Unexpected error occured.'));
     }
   }
 }
