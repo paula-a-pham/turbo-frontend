@@ -5,12 +5,15 @@ import { IToast } from '../../../shared/interfaces/itoast';
   providedIn: 'root',
 })
 export class ToasterService {
+  // declare array for toasts
   toasts!: IToast[];
 
+  // initialize toasts array
   constructor() {
     this.toasts = [];
   }
 
+  // create all toast methods with toast title and class for each toast type
   showSuccess(toast: IToast): void {
     toast.title = 'Success';
     toast.className = 'success';
@@ -41,10 +44,12 @@ export class ToasterService {
     this.toasts.push(toast);
   }
 
+  // remove specific toast
   remove(toast: IToast): void {
     this.toasts = this.toasts.filter((t) => t !== toast);
   }
 
+  // remove all toasts
   clear(): void {
     this.toasts.splice(0, this.toasts.length);
   }
