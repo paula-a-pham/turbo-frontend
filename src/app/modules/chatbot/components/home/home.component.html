@@ -7,7 +7,13 @@
         alt="Turbo"
       />
       <span class="text-xl text-semibold">Turbo</span>
-      <div class="collapse-icon" (click)="toggleSidebarCollapsing()">
+      <div
+        class="collapse-icon"
+        placement="end"
+        ngbTooltip="Collapce Sidebar"
+        tooltipClass="custom-tooltip"
+        (click)="toggleSidebarCollapsing()"
+      >
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M14.97 22.75H8.96997C3.53997 22.75 1.21997 20.43 1.21997 15V9C1.21997 3.57 3.53997 1.25 8.96997 1.25H14.97C20.4 1.25 22.72 3.57 22.72 9V15C22.72 20.43 20.41 22.75 14.97 22.75ZM8.96997 2.75C4.35997 2.75 2.71997 4.39 2.71997 9V15C2.71997 19.61 4.35997 21.25 8.96997 21.25H14.97C19.58 21.25 21.22 19.61 21.22 15V9C21.22 4.39 19.58 2.75 14.97 2.75H8.96997Z"
@@ -388,7 +394,13 @@
   >
     <header class="home-header">
       <div *ngIf="sidebarCollapsed" class="home-header-left">
-        <div class="expand-icon" (click)="toggleSidebarCollapsing()">
+        <div
+          class="expand-icon"
+          placement="end"
+          ngbTooltip="Open Sidebar"
+          tooltipClass="custom-tooltip"
+          (click)="toggleSidebarCollapsing()"
+        >
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -405,7 +417,12 @@
             />
           </svg>
         </div>
-        <div class="new-chat-icon">
+        <div
+          class="new-chat-icon"
+          placement="end"
+          ngbTooltip="New Chat"
+          tooltipClass="custom-tooltip"
+        >
           <svg
             viewBox="0 0 24 24"
             fill="none"
