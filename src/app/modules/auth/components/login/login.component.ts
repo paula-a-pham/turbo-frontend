@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseAuthService } from '../../../../core/services/firebase/auth/firebase-auth.service';
 import { ILoginUser } from '../../../../shared/models/iuser';
@@ -12,10 +12,10 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
   // declare component variables
   reactiveForm!: FormGroup;
-  loading!: boolean;
+  loading: boolean = false;
 
   // create subject that emits a signal when the service is destroyed
   private destroy$: Subject<void> = new Subject<void>();
@@ -26,9 +26,10 @@ export class LoginComponent implements OnDestroy {
     private router: Router,
     private toasterService: ToasterService,
     private firebaseAuthService: FirebaseAuthService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.initReactiveForm();
-    this.loading = false;
   }
 
   // define reactive form fields

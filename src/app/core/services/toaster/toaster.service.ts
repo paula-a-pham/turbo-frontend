@@ -6,12 +6,7 @@ import { IToast } from '../../../shared/interfaces/itoast';
 })
 export class ToasterService {
   // declare array for toasts
-  toasts!: IToast[];
-
-  // initialize toasts array
-  constructor() {
-    this.toasts = [];
-  }
+  toasts: IToast[] = [];
 
   // create all toast methods with toast title and class for each toast type
   showSuccess(toast: IToast): void {

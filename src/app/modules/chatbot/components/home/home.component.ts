@@ -14,8 +14,8 @@ import { SubscriptionService } from '../../../../core/services/subscription/subs
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  sidebarCollapsed!: boolean;
-  viewportWidth!: number;
+  sidebarCollapsed: boolean = false;
+  viewportWidth: number = 0;
   currentUser?: IUser;
 
   // create subject that emits a signal when the service is destroyed
@@ -27,10 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private toasterService: ToasterService,
     private firebaseAuthService: FirebaseAuthService,
     private subscriptionService: SubscriptionService
-  ) {
-    this.sidebarCollapsed = false;
-    this.viewportWidth = 0;
-  }
+  ) {}
 
   async ngOnInit(): Promise<void> {
     this.getCurrentUser();
