@@ -30,6 +30,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.getSidebarStatus();
+
     this.getCurrentUser();
 
     this.viewportWidth = window.innerWidth;
@@ -39,8 +41,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     window.addEventListener('resize', this.onViewResize);
   }
 
+  getSidebarStatus(): void {
+    const localStorageValue = localStorage.getItem('sidebar-status');
+    if (localStorageValue) {
+      this.sidebarCollapsed = JSON.parse(localStorageValue);
+    }
+  }
+
   toggleSidebarCollapsing(): void {
     this.sidebarCollapsed = !this.sidebarCollapsed;
+    const localStorageValue = JSON.stringify(this.sidebarCollapsed);
+    localStorage.setItem('sidebar-status', localStorageValue);
   }
 
   onViewResize = (): void => {
@@ -80,6 +91,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
+    localStorage.clear();
     const observer = {
       next: () => {
         this.modalService.dismissAll();
