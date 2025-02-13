@@ -32,8 +32,8 @@ a:hover {
 }
 
 .x-btn:disabled {
-  background-color: var(--gray-120);
-  border-color: var(--gray-120);
+  background-color: var(--gray-115);
+  border-color: var(--gray-115);
   cursor: not-allowed;
 }
 
@@ -61,7 +61,7 @@ a:hover {
 }
 
 .x-btn-outline:disabled {
-  background-color: var(--gray-15);
+  background-color: var(--gray-20);
   cursor: not-allowed;
 }
 
