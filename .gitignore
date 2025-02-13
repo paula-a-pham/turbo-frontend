@@ -46,3 +46,4 @@ Thumbs.db
 *-debug.log
 .runtimeconfig.json
 src/environments/firebase-config.ts
+src/environments/groq-api-keys.ts
