@@ -59,14 +59,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   };
 
   openModal(content: TemplateRef<any>): void {
-    this.modalService.open(content, {
-      modalDialogClass: 'custom-modal',
-    });
+    this.modalService.open(content);
   }
 
   openSmallModal(content: TemplateRef<any>): void {
     this.modalService.open(content, {
-      modalDialogClass: 'custom-modal',
       size: 'sm',
     });
   }

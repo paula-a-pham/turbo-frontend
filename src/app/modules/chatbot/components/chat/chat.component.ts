@@ -1,4 +1,14 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { IMessage } from '../../../../shared/models/imessage';
 import { MessageRole } from '../../../../shared/enums/message-role';
 import { GroqService } from '../../../../core/services/groq/groq.service';
@@ -12,6 +22,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-chat',
@@ -29,8 +40,13 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     ]),
   ],
 })
-export class ChatComponent {
+export class ChatComponent implements OnChanges {
+  @Input() isGuestUser: boolean = false;
+  @Input() newChat: boolean = false;
+
   @ViewChild('chatArea') chatArea!: ElementRef;
+  @ViewChild('guestLimitModal') guestLimitModal!: ElementRef;
+
   messageRole = MessageRole;
   messages: IMessage[] = [];
   userPrompt: string = '';
@@ -39,8 +55,16 @@ export class ChatComponent {
   constructor(
     private groqService: GroqService,
     private toasterService: ToasterService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private modalService: NgbModal
   ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['newChat'] && this.newChat) {
+      this.newChatChange();
+      this.newChat = false;
+    }
+  }
 
   adjustTextareaHeight(event: any): void {
     const textarea = event.target;
@@ -61,8 +85,40 @@ export class ChatComponent {
     container.scrollTop = container.scrollHeight;
   }
 
+  checkForGuestUserLimit(): boolean {
+    const stringNumber = localStorage.getItem('guest-messages-number');
+    if (stringNumber) {
+      const number = +stringNumber;
+      if (number > 5) {
+        this.userPrompt = '';
+        this.openGuestLimitModalModal();
+        return true;
+      }
+      localStorage.setItem('guest-messages-number', `${number + 1}`);
+      return false;
+    }
+    localStorage.setItem('guest-messages-number', '1');
+    return false;
+  }
+
+  newChatChange(): void {
+    this.messages = [];
+    this.userPrompt = '';
+    if (this.isGuestUser) {
+      const limitFinish = this.checkForGuestUserLimit();
+
+      if (!limitFinish) this.openGuestLimitModalModal;
+    }
+  }
+
   onSubmit(): void {
     if (this.userPrompt && !this.waiting) {
+      if (this.isGuestUser) {
+        const limitFinish = this.checkForGuestUserLimit();
+
+        if (limitFinish) return;
+      }
+
       this.waiting = true;
 
       setTimeout(() => {
@@ -109,5 +165,9 @@ export class ChatComponent {
 
       this.groqService.sendRquest(this.messages).subscribe(observer);
     }
+  }
+
+  openGuestLimitModalModal(): void {
+    this.modalService.open(this.guestLimitModal);
   }
 }

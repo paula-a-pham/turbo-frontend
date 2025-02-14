@@ -7,13 +7,11 @@ const routes: Routes = [
     path: 'log-in',
     loadChildren: () =>
       import('./components/login/login.module').then((m) => m.LoginModule),
-    title: 'Authentication',
   },
   {
     path: 'sign-up',
     loadChildren: () =>
       import('./components/sign-up/sign-up.module').then((m) => m.SignUpModule),
-    title: 'Authentication',
   },
 ];
 

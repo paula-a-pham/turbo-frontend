@@ -59,27 +59,11 @@
   width: 1.5rem;
 }
 
-.x-btn {
-  background-color: var(--black);
-  border: none;
-  border-radius: 0.5rem;
+.submit-btn {
   padding: 0.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease;
 }
 
-.x-btn:hover {
-  background-color: var(--gray-125);
-}
-
-.x-btn:disabled {
-  background-color: var(--gray-115);
-  cursor: not-allowed;
-}
-
-.x-btn svg {
+.submit-btn svg {
   stroke: var(--white);
   width: 1.5rem;
 }
@@ -176,6 +160,15 @@
 
 .ai-waiting {
   align-items: center;
+}
+
+.x-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.btn-close:focus {
+  box-shadow: none;
 }
 
 /*!

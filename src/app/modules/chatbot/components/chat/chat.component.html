@@ -161,7 +161,7 @@
         ></textarea>
 
         <div class="d-flex align-items-center justify-content-between w-100">
-          <div class="attach-btn">
+          <div class="attach-btn" (click)="openGuestLimitModalModal()">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -176,7 +176,7 @@
           <button
             [disabled]="!userPrompt || waiting"
             type="submit"
-            class="x-btn"
+            class="x-btn submit-btn"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -197,5 +197,45 @@
     </section>
   </div>
 </div>
+
+<ng-template #guestLimitModal let-modal>
+  <div class="modal-body">
+    <div class="x-modal-header">
+      <span class="text-lg text-semibold">Turbo</span>
+      <button
+        type="button"
+        class="btn-close ms-auto"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <hr />
+
+    <div class="mb-3">
+      <div class="text-lg text-medium mb-3">Try more features for free</div>
+
+      <div class="text-sm">
+        Get smarter responses, upload files, and more by logging in.
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+      <button
+        class="x-btn w-100"
+        routerLink="/auth/log-in"
+        (click)="modal.dismiss('Cross click')"
+      >
+        Log in
+      </button>
+      <button
+        class="x-btn-outline w-100"
+        routerLink="/auth/sign-up"
+        (click)="modal.dismiss('Cross click')"
+      >
+        Sign up
+      </button>
+    </div>
+  </div>
+</ng-template>
 
 <app-toaster></app-toaster>
