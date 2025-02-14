@@ -37,9 +37,9 @@ export class GroqService {
 
   // send request for groq api
   sendRquest(messages: IMessage[]): Observable<IChoice[]> {
-    // create clone from groq request object to add new messages to it
-    let groqRequestClone = this.groqRequest;
-    groqRequestClone.messages = [...groqRequestClone.messages, ...messages];
+    // create deep clone from groq request object to add new messages to it
+    let groqRequestClone = structuredClone(this.groqRequest);
+    groqRequestClone.messages.push(...messages);
 
     return this.httpClient
       .post<IGroqResponse>(environment.groqApiUrl, groqRequestClone)
