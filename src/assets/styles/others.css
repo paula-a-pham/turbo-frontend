@@ -7,7 +7,6 @@ svg path {
 /* Angular Components */
 
 app-toaster {
-  height: auto;
   margin: 1rem;
   position: fixed;
   top: 0;
@@ -16,8 +15,4 @@ app-toaster {
   flex-direction: column;
   gap: 0.5rem;
   z-index: 1200;
-}
-
-.custom-modal {
-  height: auto;
 }

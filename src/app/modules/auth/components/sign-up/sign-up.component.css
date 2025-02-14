@@ -1,4 +1,5 @@
 .main-container {
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,7 +8,6 @@
 }
 
 .brand-container {
-  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,7 +20,6 @@
 }
 
 .form-container {
-  height: auto;
   width: 25%;
 }
 

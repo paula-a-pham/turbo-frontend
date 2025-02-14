@@ -1,4 +1,4 @@
-<div class="d-flex" *ngIf="currentUser">
+<div class="d-flex h-100" *ngIf="currentUser">
   <aside class="sidebar" [ngClass]="{ 'sidebar-collapsed': sidebarCollapsed }">
     <div *ngIf="!sidebarCollapsed" class="top-sidebar-container">
       <img
@@ -7,13 +7,7 @@
         alt="Turbo"
       />
       <span class="text-xl text-semibold">Turbo</span>
-      <div
-        class="collapse-icon"
-        placement="end"
-        ngbTooltip="Collapce Sidebar"
-        tooltipClass="custom-tooltip"
-        (click)="toggleSidebarCollapsing()"
-      >
+      <div class="collapse-icon" (click)="toggleSidebarCollapsing()">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M14.97 22.75H8.96997C3.53997 22.75 1.21997 20.43 1.21997 15V9C1.21997 3.57 3.53997 1.25 8.96997 1.25H14.97C20.4 1.25 22.72 3.57 22.72 9V15C22.72 20.43 20.41 22.75 14.97 22.75ZM8.96997 2.75C4.35997 2.75 2.71997 4.39 2.71997 9V15C2.71997 19.61 4.35997 21.25 8.96997 21.25H14.97C19.58 21.25 21.22 19.61 21.22 15V9C21.22 4.39 19.58 2.75 14.97 2.75H8.96997Z"
@@ -389,18 +383,12 @@
   <section
     class="main-container"
     [ngClass]="{
-      'main-containe-responsive': !sidebarCollapsed && viewportWidth <= 1024
+      'main-container-responsive': !sidebarCollapsed && viewportWidth <= 1024
     }"
   >
     <header class="home-header">
       <div *ngIf="sidebarCollapsed" class="home-header-left">
-        <div
-          class="expand-icon"
-          placement="end"
-          ngbTooltip="Open Sidebar"
-          tooltipClass="custom-tooltip"
-          (click)="toggleSidebarCollapsing()"
-        >
+        <div class="expand-icon" (click)="toggleSidebarCollapsing()">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -417,12 +405,7 @@
             />
           </svg>
         </div>
-        <div
-          class="new-chat-icon"
-          placement="end"
-          ngbTooltip="New Chat"
-          tooltipClass="custom-tooltip"
-        >
+        <div class="new-chat-icon">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -451,7 +434,7 @@
           >
             {{ currentUser.displayName[0] | titlecase }}
           </button>
-          <ul class="dropdown-menu h-auto">
+          <ul class="dropdown-menu">
             <li>
               <div class="dropdown-item" (click)="openModal(account)">
                 <svg
@@ -511,14 +494,13 @@
             </li>
           </ul>
         </div>
-        <!-- <div class="profile-avatar text-xl text-semibold">P</div> -->
       </div>
     </header>
     <section class="chat-container">
       <app-chat></app-chat>
     </section>
 
-    <footer class="h-auto">
+    <footer>
       <app-bot-footer></app-bot-footer>
     </footer>
   </section>
@@ -544,10 +526,6 @@
         <span>Delete Account</span>
         <button class="x-btn-danger">Delete</button>
       </div>
-      <!-- <div class="d-flex align-items-center justify-content-between w-100">
-        <span>Delete all chats</span>
-        <button class="x-btn-outline">Archive all</button>
-      </div> -->
     </div>
   </div>
 </ng-template>

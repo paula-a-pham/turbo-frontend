@@ -2,3 +2,29 @@
   flex: 1;
   overflow: hidden;
 }
+
+.bot-header {
+  padding: 1rem 0.5rem;
+}
+
+.new-chat {
+  color: var(--gray-125);
+  background-color: transparent;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.new-chat:hover {
+  background-color: var(--gray-10);
+}
+
+.auth-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-right: 0.5rem;
+}
