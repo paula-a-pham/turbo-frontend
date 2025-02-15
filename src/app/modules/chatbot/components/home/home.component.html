@@ -451,7 +451,10 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            {{ currentUser.displayName[0] | titlecase }}
+            {{
+              (currentUser.displayName ? currentUser.displayName[0] : "T")
+                | titlecase
+            }}
           </button>
           <ul class="dropdown-menu">
             <li>
@@ -525,6 +528,38 @@
   </section>
 </div>
 
+<ng-template #deleteAccountWarning let-modal>
+  <div class="modal-body">
+    <div class="x-modal-header">
+      <span class="text-lg text-semibold">Warning</span>
+      <button
+        type="button"
+        class="btn-close ms-auto"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <hr />
+    <div class="mb-3">
+      <p>
+        Deleting your account will remove all your data permanently. This action
+        <strong>cannot be undone</strong>
+      </p>
+    </div>
+    <div class="mb-3">
+      <strong class="text-danger">Are you sure you want to proceed?</strong>
+    </div>
+    <div class="d-flex align-items-center justify-content-center gap-2">
+      <button
+        class="x-btn-outline w-100"
+        (click)="modal.dismiss('Cross click')"
+      >
+        Cancle
+      </button>
+      <button class="x-btn-danger w-100" (click)="deleteUser()">Delete</button>
+    </div>
+  </div>
+</ng-template>
 <ng-template #account let-modal>
   <div class="modal-body">
     <div class="x-modal-header">
@@ -543,7 +578,9 @@
     >
       <div class="d-flex align-items-center justify-content-between w-100">
         <span>Delete Account</span>
-        <button class="x-btn-danger">Delete</button>
+        <button class="x-btn-danger" (click)="openModal(deleteAccountWarning)">
+          Delete
+        </button>
       </div>
     </div>
   </div>

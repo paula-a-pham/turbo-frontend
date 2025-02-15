@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
 import { User } from '@angular/fire/auth';
-import { IUser } from '../../../../shared/models/iuser';
 import { Subject, takeUntil } from 'rxjs';
 import { SubscriptionService } from '../../../../core/services/subscription/subscription.service';
 
@@ -16,7 +15,7 @@ import { SubscriptionService } from '../../../../core/services/subscription/subs
 export class HomeComponent implements OnInit, OnDestroy {
   sidebarCollapsed: boolean = false;
   viewportWidth: number = 0;
-  currentUser?: IUser;
+  currentUser?: User;
 
   // create subject that emits a signal when the service is destroyed
   private destroy$: Subject<void> = new Subject<void>();
@@ -72,7 +71,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     const observer = {
       next: async (user: User | null) => {
         if (user) {
-          this.currentUser = user as IUser;
+          this.currentUser = user;
         } else {
           this.logout();
         }
@@ -84,6 +83,24 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.firebaseAuthService
       .getCurrentUser()
       .pipe(takeUntil(this.subscriptionService.destroySignal))
+      .subscribe(observer);
+  }
+
+  deleteUser(): void {
+    localStorage.clear();
+    const observer = {
+      next: () => {
+        this.modalService.dismissAll();
+        this.router.navigate(['/'], { replaceUrl: true });
+      },
+      error: (error: any) => {
+        this.modalService.dismissAll();
+        this.toasterService.showError({ message: error.message });
+      },
+    };
+    this.firebaseAuthService
+      .deleteUser(this.currentUser!)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(observer);
   }
 

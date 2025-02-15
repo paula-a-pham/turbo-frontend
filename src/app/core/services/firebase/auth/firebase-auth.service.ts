@@ -3,6 +3,7 @@ import {
   Auth,
   authState,
   createUserWithEmailAndPassword,
+  deleteUser,
   signInWithEmailAndPassword,
   signOut,
   updateEmail,
@@ -54,6 +55,12 @@ export class FirebaseAuthService {
 
   updateUserDisplayName(user: User, name: string): Observable<void> {
     return from(updateProfile(user, { displayName: name })).pipe(
+      catchError(this.handleAuthErrors.bind(this))
+    );
+  }
+
+  deleteUser(user: User): Observable<void> {
+    return from(deleteUser(user)).pipe(
       catchError(this.handleAuthErrors.bind(this))
     );
   }
