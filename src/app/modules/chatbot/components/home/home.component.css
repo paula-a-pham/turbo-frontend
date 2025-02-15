@@ -20,7 +20,8 @@
 .logo,
 .collapse-icon svg,
 .expand-icon svg,
-.new-chat-icon svg {
+.new-chat-icon svg,
+.archive-icon svg {
   height: 1.5rem;
   width: 1.5rem;
 }
@@ -42,6 +43,7 @@
   text-align: center;
   border-radius: 0.55rem;
   cursor: pointer;
+  transition: background-color 0.1s ease;
 }
 
 .new-chat:hover {
@@ -195,6 +197,23 @@
 }
 .btn-close:focus {
   box-shadow: none;
+}
+
+.archive {
+  background-color: var(--gray-25);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+.archive:hover {
+  background-color: var(--gray-30);
 }
 
 @media (max-width: 1024px) {

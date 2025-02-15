@@ -85,7 +85,7 @@ export class ChatComponent implements OnChanges {
     container.scrollTop = container.scrollHeight;
   }
 
-  checkForGuestUserLimit(): boolean {
+  checkForGuestUserLimit(shouldIncrement?: boolean): boolean {
     const stringNumber = localStorage.getItem('guest-messages-number');
     if (stringNumber) {
       const number = +stringNumber;
@@ -94,10 +94,14 @@ export class ChatComponent implements OnChanges {
         this.openGuestLimitModalModal();
         return true;
       }
-      localStorage.setItem('guest-messages-number', `${number + 1}`);
+      if (shouldIncrement) {
+        localStorage.setItem('guest-messages-number', `${number + 1}`);
+      }
       return false;
     }
-    localStorage.setItem('guest-messages-number', '1');
+    if (shouldIncrement) {
+      localStorage.setItem('guest-messages-number', '1');
+    }
     return false;
   }
 
@@ -105,16 +109,14 @@ export class ChatComponent implements OnChanges {
     this.messages = [];
     this.userPrompt = '';
     if (this.isGuestUser) {
-      const limitFinish = this.checkForGuestUserLimit();
-
-      if (!limitFinish) this.openGuestLimitModalModal;
+      this.checkForGuestUserLimit();
     }
   }
 
   onSubmit(): void {
     if (this.userPrompt && !this.waiting) {
       if (this.isGuestUser) {
-        const limitFinish = this.checkForGuestUserLimit();
+        const limitFinish = this.checkForGuestUserLimit(true);
 
         if (limitFinish) return;
       }

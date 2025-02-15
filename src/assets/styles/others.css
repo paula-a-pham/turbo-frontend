@@ -16,3 +16,10 @@ app-toaster {
   gap: 0.5rem;
   z-index: 1200;
 }
+
+/* Custom Classes */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}

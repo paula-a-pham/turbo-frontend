@@ -44,23 +44,27 @@
   transition: height 0.1s ease;
 }
 
-.attach-btn {
+.attach-btn,
+.options-btn {
   background-color: transparent;
   border-radius: 0.5rem;
   padding: 0.25rem;
   transition: background-color 0.3s ease;
 }
 
-.attach-btn:hover {
+.attach-btn:hover,
+.options-btn:hover {
   background-color: var(--gray-25);
 }
 
-.attach-btn svg {
+.attach-btn svg,
+.options-btn svg {
   width: 1.5rem;
 }
 
 .submit-btn {
   padding: 0.25rem;
+  border-radius: 50%;
 }
 
 .submit-btn svg {
