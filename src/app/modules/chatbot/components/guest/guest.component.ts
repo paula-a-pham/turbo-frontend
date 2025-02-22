@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IMessage } from '../../../../shared/models/imessage';
 
 @Component({
   selector: 'app-guest',
@@ -7,6 +8,7 @@ import { Component } from '@angular/core';
 })
 export class GuestComponent {
   newChat: boolean = false;
+  messages: IMessage[] = [];
 
   newChatChange(): void {
     this.newChat = true;
@@ -14,5 +16,9 @@ export class GuestComponent {
     setTimeout(() => {
       this.newChat = false;
     }, 0);
+  }
+
+  onNewMessageDetect(message: IMessage): void {
+    this.messages = [...this.messages, message];
   }
 }

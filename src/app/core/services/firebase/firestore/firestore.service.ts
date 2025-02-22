@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   addDoc,
   collection,
+  collectionData,
   CollectionReference,
   deleteDoc,
   doc,
@@ -10,6 +11,7 @@ import {
   Firestore,
   getDoc,
   getDocs,
+  orderBy,
   query,
   updateDoc,
   where,
@@ -20,7 +22,7 @@ import {
   IChatUpdateDto,
 } from '../../../../shared/models/ichat';
 import { from, map, Observable } from 'rxjs';
-import { IConversation } from '../../../../shared/models/iconversation';
+import { IMessage } from '../../../../shared/models/imessage';
 
 @Injectable({
   providedIn: 'root',
@@ -48,10 +50,18 @@ export class FirestoreService {
       collection(this.firestore, this.collectionName);
 
     // apply filter to get only document for logged in user
-    const filteredQuery = query(itemsCollection, where('userId', '==', userId));
+    const filteredQuery = query(
+      itemsCollection,
+      where('userId', '==', userId),
+      orderBy('lastUpdate', 'desc')
+    );
 
-    return from(getDocs(filteredQuery)).pipe(
-      map((docs) => docs.docs.map((doc) => doc.data() as IChatBase))
+    return from(collectionData(filteredQuery, { idField: 'id' })).pipe(
+      map((chats) =>
+        chats.map(
+          (chat) => ({ id: chat['id'], name: chat['name']??'New Chat' } as IChatBase)
+        )
+      )
     );
   }
 
@@ -66,11 +76,9 @@ export class FirestoreService {
     return from(getDoc(itemRef)).pipe(map((doc) => doc.data() as IChat));
   }
 
-  // extract all conversations inside a specifiec chat
-  getChatConversationsByChatId(chatId: string): Observable<IConversation[]> {
-    return this.getChatById(chatId).pipe(
-      map((chat) => chat.conversations || [])
-    );
+  // extract all messages inside a specifiec chat
+  getChatMessagesByChatId(chatId: string): Observable<IMessage[]> {
+    return this.getChatById(chatId).pipe(map((chat) => chat.messages || []));
   }
 
   // update chat properties in optional way using IChatUpdateDto

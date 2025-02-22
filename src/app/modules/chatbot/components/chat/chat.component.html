@@ -58,7 +58,7 @@
               alt="Turbo"
             />
           </div>
-          <div class="response-bubble" @slideIn>
+          <div class="response-bubble">
             <div
               class="response-content"
               [innerHTML]="safeHtml(message.content)"
@@ -189,7 +189,9 @@
           </div>
 
           <button
-            [disabled]="!userPrompt || waiting"
+            [disabled]="
+              !userPrompt || waiting || userPrompt.trim().length === 0
+            "
             type="submit"
             class="x-btn submit-btn ms-auto"
           >

@@ -31,7 +31,12 @@
   </header>
 
   <section class="chat-container">
-    <app-chat [isGuestUser]="true" [newChat]="newChat"></app-chat>
+    <app-chat
+      [isGuestUser]="true"
+      [newChat]="newChat"
+      [messages]="messages"
+      (newMwssage)="onNewMessageDetect($event)"
+    ></app-chat>
   </section>
 
   <footer>

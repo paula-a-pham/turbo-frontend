@@ -57,6 +57,7 @@
 }
 
 .history {
+  flex:1;
   scrollbar-color: var(--gray-70) var(--gray-5);
   width: 100%;
   padding-right: 1rem;
@@ -91,6 +92,15 @@
   width: 1.5rem;
   margin-left: 0.5rem;
   visibility: hidden;
+}
+
+.selected-chat{
+  background-color: var(--gray-20);
+
+}
+
+.selected-chat .history-item-actions {
+  visibility: visible;
 }
 
 .history-item:hover {

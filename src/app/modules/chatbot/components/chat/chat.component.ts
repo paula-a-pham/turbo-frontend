@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -43,12 +44,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ChatComponent implements OnChanges {
   @Input() isGuestUser: boolean = false;
   @Input() newChat: boolean = false;
+  @Input() messages: IMessage[] = [];
 
-  @ViewChild('chatArea') chatArea!: ElementRef;
+  @Output() newMwssage = new EventEmitter<IMessage>();
+
+  @ViewChild('chatArea', { static: false }) chatArea!: ElementRef;
   @ViewChild('guestLimitModal') guestLimitModal!: ElementRef;
 
   messageRole = MessageRole;
-  messages: IMessage[] = [];
   userPrompt: string = '';
   waiting: boolean = false;
 
@@ -63,6 +66,11 @@ export class ChatComponent implements OnChanges {
     if (changes['newChat'] && this.newChat) {
       this.newChatChange();
       this.newChat = false;
+    }
+    if (changes['messages'] && this.messages.length) {
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 0);
     }
   }
 
@@ -81,8 +89,10 @@ export class ChatComponent implements OnChanges {
   }
 
   scrollToBottom() {
-    const container = this.chatArea.nativeElement;
-    container.scrollTop = container.scrollHeight;
+    if (this.chatArea) {
+      const container = this.chatArea.nativeElement;
+      container.scrollTop = container.scrollHeight;
+    }
   }
 
   checkForGuestUserLimit(shouldIncrement?: boolean): boolean {
@@ -114,6 +124,10 @@ export class ChatComponent implements OnChanges {
   }
 
   onSubmit(): void {
+    if (this.userPrompt.trim().length === 0) {
+      this.userPrompt = '';
+      return;
+    }
     if (this.userPrompt && !this.waiting) {
       if (this.isGuestUser) {
         const limitFinish = this.checkForGuestUserLimit(true);
@@ -123,20 +137,13 @@ export class ChatComponent implements OnChanges {
 
       this.waiting = true;
 
-      setTimeout(() => {
-        this.scrollToBottom();
-      }, 0);
-
-      const newMessage: IMessage = {
+      const userMessage: IMessage = {
         role: this.messageRole.user,
         content: this.userPrompt,
       };
 
-      this.messages.push(newMessage);
+      this.newMwssage.emit(userMessage);
 
-      setTimeout(() => {
-        this.scrollToBottom();
-      }, 0);
       this.userPrompt = '';
 
       const observer = {
@@ -145,11 +152,7 @@ export class ChatComponent implements OnChanges {
 
           if (choices && choices.length > 0) {
             const assistantMessage: IMessage = choices[0].message;
-            this.messages.push(assistantMessage);
-
-            setTimeout(() => {
-              this.scrollToBottom();
-            }, 0);
+            this.newMwssage.emit(assistantMessage);
           } else {
             this.toasterService.showError({
               message: 'Something went wrong, try again later!',
@@ -165,7 +168,9 @@ export class ChatComponent implements OnChanges {
         },
       };
 
-      this.groqService.sendRquest(this.messages).subscribe(observer);
+      setTimeout(() => {
+        this.groqService.sendRquest(this.messages).subscribe(observer);
+      }, 0);
     }
   }
 
