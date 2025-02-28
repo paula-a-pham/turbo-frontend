@@ -15,13 +15,6 @@ import { MessageRole } from '../../../../shared/enums/message-role';
 import { GroqService } from '../../../../core/services/groq/groq.service';
 import { IChoice } from '../../../../shared/models/igroq-response';
 import { ToasterService } from '../../../../core/services/toaster/toaster.service';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -29,17 +22,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
-  animations: [
-    trigger('slideIn', [
-      state('void', style({ transform: 'translateY(30px)', opacity: 0 })), // Initial state (hidden)
-      transition(':enter', [
-        animate(
-          '100ms ease-out',
-          style({ transform: 'translateY(0)', opacity: 1 })
-        ),
-      ]),
-    ]),
-  ],
 })
 export class ChatComponent implements OnChanges {
   @Input() isGuestUser: boolean = false;
